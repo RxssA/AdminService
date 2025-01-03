@@ -18,8 +18,10 @@ public class adminController {
     }
 
     @PostMapping
-    public ResponseEntity<adminUser> createAdmin(@RequestParam String name, @RequestParam String email) {
-        adminUser admin = adminService.createAdmin(name, email);
+    public ResponseEntity<adminUser> createAdmin(@RequestParam String username,
+                                                 @RequestParam String email,
+                                                 @RequestParam String role) {
+        adminUser admin = adminService.createAdmin(username, email, role);
         return new ResponseEntity<>(admin, HttpStatus.CREATED);
     }
 
@@ -37,8 +39,11 @@ public class adminController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<adminUser> updateAdmin(@PathVariable String id, @RequestParam String name, @RequestParam String email) {
-        adminUser updatedAdmin = adminService.updateAdmin(id, name, email);
+    public ResponseEntity<adminUser> updateAdmin(@PathVariable String id,
+                                                 @RequestParam String username,
+                                                 @RequestParam String email,
+                                                 @RequestParam String role) {
+        adminUser updatedAdmin = adminService.updateAdmin(id, username, email, role);
         if (updatedAdmin != null) {
             return new ResponseEntity<>(updatedAdmin, HttpStatus.OK);
         } else {
