@@ -1,14 +1,14 @@
-package ie.atu.adminservice;
+package ie.atu.adminservice.model;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "users")
-public class User {
+@Document(collection = "bookings")
+public class Booking {
 
     @Id
     private String id;
-    private String name;
+    private String details;
 
     // Getters and setters
     public String getId() {
@@ -19,11 +19,11 @@ public class User {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getDetails() {
+        return details;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setDetails(String details) {
+        this.details = details;
     }
 }

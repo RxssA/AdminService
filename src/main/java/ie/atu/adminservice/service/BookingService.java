@@ -1,9 +1,9 @@
-package ie.atu.adminservice;
+package ie.atu.adminservice.service;
 
 import org.springframework.stereotype.Service;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-
+import ie.atu.adminservice.repository.BookingRepository;
 
 @Service
 public class BookingService {
