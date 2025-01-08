@@ -1,9 +1,11 @@
 package ie.atu.adminservice.service;
 
-import org.springframework.stereotype.Service;
-import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
 import ie.atu.adminservice.repository.UserRepository;
+import ie.atu.adminservice.exception.ResourceNotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class UserService {
@@ -16,6 +18,9 @@ public class UserService {
     }
 
     public void deleteUser(String id) {
+        if (!userRepository.existsById(id)) {
+            throw new ResourceNotFoundException("User not found with id: " + id);
+        }
         userRepository.deleteById(id);
     }
 }

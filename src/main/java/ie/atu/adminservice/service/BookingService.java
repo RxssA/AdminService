@@ -1,9 +1,11 @@
 package ie.atu.adminservice.service;
 
-import org.springframework.stereotype.Service;
-import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
 import ie.atu.adminservice.repository.BookingRepository;
+import ie.atu.adminservice.exception.ResourceNotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class BookingService {
@@ -16,6 +18,9 @@ public class BookingService {
     }
 
     public void deleteBooking(String id) {
+        if (!bookingRepository.existsById(id)) {
+            throw new ResourceNotFoundException("Booking not found with id: " + id);
+        }
         bookingRepository.deleteById(id);
     }
 }

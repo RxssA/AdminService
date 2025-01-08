@@ -10,7 +10,7 @@ public class Booking {
     private String id;
     private String details;
 
-    // Getters and setters
+    // Getters and Setters
     public String getId() {
         return id;
     }
