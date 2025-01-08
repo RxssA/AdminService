@@ -1,5 +1,6 @@
 package ie.atu.adminservice.controller;
 
+import ie.atu.adminservice.UserServiceClient;
 import ie.atu.adminservice.model.Booking;
 import ie.atu.adminservice.service.BookingService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,11 +8,17 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/bookings")
+@RequestMapping("/api/bookings")
 public class BookingController {
 
     @Autowired
     private BookingService bookingService;
+
+    private UserServiceClient userServiceClient;
+
+    public BookingController(UserServiceClient userServiceClient) {
+        this.userServiceClient = userServiceClient;
+    }
 
     @GetMapping
     public ResponseEntity<?> getAllBookings() {
@@ -27,5 +34,10 @@ public class BookingController {
     public ResponseEntity<Void> deleteBookingsByUserId(@PathVariable String userId) {
         bookingService.deleteBookingByUserId(userId);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/users/{id}")
+    public ResponseEntity<Booking> getUserDetails(@PathVariable String id) {
+        return userServiceClient.getUserById(id);
     }
 }
