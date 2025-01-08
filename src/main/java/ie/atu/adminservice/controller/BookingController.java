@@ -16,7 +16,8 @@ public class BookingController {
 
     private UserServiceClient userServiceClient;
 
-    public BookingController(UserServiceClient userServiceClient) {
+    public BookingController(BookingService bookingService, UserServiceClient userServiceClient) {
+        this.bookingService = bookingService;
         this.userServiceClient = userServiceClient;
     }
 

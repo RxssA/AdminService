@@ -58,6 +58,14 @@
             <scope>test</scope>
         </dependency>
         <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-inline</artifactId>
+            <version>4.0.0</version> <!-- Use the version you need -->
+            <scope>test</scope>
+        </dependency>
+
+
+        <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-test</artifactId>
             <scope>test</scope>
