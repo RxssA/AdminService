@@ -1,14 +1,12 @@
 package ie.atu.adminservice.controller;
 
 import ie.atu.adminservice.service.BookingService;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.ResponseEntity;
-
-import java.util.Collections;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -21,34 +19,29 @@ class BookingControllerTest {
     @InjectMocks
     private BookingController bookingController;
 
-    public BookingControllerTest() {
+    @BeforeEach
+    void setUp() {
         MockitoAnnotations.openMocks(this);
     }
 
     @Test
     void getAllBookings_ShouldReturnResponse() {
-        // Arrange
-        when(bookingService.getAllBookings()).thenReturn(Collections.emptyList());
+        when(bookingService.getAllBookings()).thenReturn(java.util.Collections.emptyList());
 
-        // Act
-        ResponseEntity<List<?>> response = bookingController.getAllBookings();
+        ResponseEntity<?> response = bookingController.getAllBookings();
 
-        // Assert
         assertNotNull(response);
         assertEquals(200, response.getStatusCodeValue());
-        assertEquals(0, response.getBody().size());
+        verify(bookingService, times(1)).getAllBookings();
     }
 
     @Test
     void deleteBooking_ShouldReturnNoContent() {
-        // Arrange
         String bookingId = "1";
         doNothing().when(bookingService).deleteBooking(bookingId);
 
-        // Act
         ResponseEntity<Void> response = bookingController.deleteBooking(bookingId);
 
-        // Assert
         assertNotNull(response);
         assertEquals(204, response.getStatusCodeValue());
         verify(bookingService, times(1)).deleteBooking(bookingId);

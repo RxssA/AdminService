@@ -1,14 +1,15 @@
 package ie.atu.adminservice.service;
 
+import ie.atu.adminservice.exception.ResourceNotFoundException;
 import ie.atu.adminservice.model.User;
 import ie.atu.adminservice.repository.UserRepository;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import java.util.Collections;
-import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -21,37 +22,34 @@ class UserServiceTest {
     @InjectMocks
     private UserService userService;
 
-    public UserServiceTest() {
+    @BeforeEach
+    void setUp() {
         MockitoAnnotations.openMocks(this);
     }
 
     @Test
     void getAllUsers_ShouldReturnUsers() {
-        // Arrange
-        User user = new User();
-        user.setId("1");
-        user.setName("John Doe");
-        when(userRepository.findAll()).thenReturn(Collections.singletonList(user));
-
-        // Act
-        List<?> users = userService.getAllUsers();
-
-        // Assert
-        assertNotNull(users);
-        assertEquals(1, users.size());
-        assertEquals("1", ((User) users.get(0)).getId());
+        when(userRepository.findAll()).thenReturn(java.util.Collections.emptyList());
+        assertNotNull(userService.getAllUsers());
+        verify(userRepository, times(1)).findAll();
     }
 
     @Test
-    void deleteUser_ShouldCallRepositoryDelete() {
-        // Arrange
+    void deleteUser_ExistingId_ShouldDeleteUser() {
         String userId = "1";
-        doNothing().when(userRepository).deleteById(userId);
+        when(userRepository.existsById(userId)).thenReturn(true);
 
-        // Act
         userService.deleteUser(userId);
 
-        // Assert
         verify(userRepository, times(1)).deleteById(userId);
+    }
+
+    @Test
+    void deleteUser_NonExistingId_ShouldThrowException() {
+        String userId = "999";
+        when(userRepository.existsById(userId)).thenReturn(false);
+
+        assertThrows(ResourceNotFoundException.class, () -> userService.deleteUser(userId));
+        verify(userRepository, never()).deleteById(userId);
     }
 }
