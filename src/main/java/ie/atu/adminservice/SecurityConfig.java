@@ -15,7 +15,7 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/bookings", "/api/bookings/{id}", "/api/users/all", "/api/users/{id}").permitAll()
+                        .requestMatchers("/api/bookings", "/api/bookings/{id}", "/api/users/all", "/api/users/{id}","http://localhost:8084/api/users").permitAll()
                         .anyRequest().authenticated() // Protect all other endpoints
                 )
                 .httpBasic(httpBasic -> httpBasic.disable())
