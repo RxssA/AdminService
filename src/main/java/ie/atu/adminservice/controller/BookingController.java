@@ -1,11 +1,10 @@
 package ie.atu.adminservice.controller;
 
+import ie.atu.adminservice.model.Booking;
 import ie.atu.adminservice.service.BookingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/bookings")
@@ -15,13 +14,18 @@ public class BookingController {
     private BookingService bookingService;
 
     @GetMapping
-    public ResponseEntity<List<?>> getAllBookings() {
+    public ResponseEntity<?> getAllBookings() {
         return ResponseEntity.ok(bookingService.getAllBookings());
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteBooking(@PathVariable String id) {
-        bookingService.deleteBooking(id);
+    @PostMapping
+    public ResponseEntity<?> createBooking(@RequestBody Booking booking) {
+        return ResponseEntity.ok(bookingService.createBooking(booking));
+    }
+
+    @DeleteMapping("/user/{userId}")
+    public ResponseEntity<Void> deleteBookingsByUserId(@PathVariable String userId) {
+        bookingService.deleteBookingByUserId(userId);
         return ResponseEntity.noContent().build();
     }
 }
