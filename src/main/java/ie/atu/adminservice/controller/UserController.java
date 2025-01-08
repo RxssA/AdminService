@@ -1,8 +1,9 @@
 package ie.atu.adminservice.controller;
+
+import ie.atu.adminservice.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ie.atu.adminservice.service.UserService;
 
 import java.util.List;
 
@@ -22,6 +23,5 @@ public class UserController {
     public ResponseEntity<Void> deleteUser(@PathVariable String id) {
         userService.deleteUser(id);
         return ResponseEntity.noContent().build();
-
-}
+    }
 }

@@ -10,7 +10,7 @@ public class User {
     private String id;
     private String name;
 
-    // Getters and setters
+    // Getters and Setters
     public String getId() {
         return id;
     }
