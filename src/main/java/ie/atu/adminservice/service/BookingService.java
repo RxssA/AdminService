@@ -1,7 +1,8 @@
 package ie.atu.adminservice.service;
 
-import ie.atu.adminservice.repository.BookingRepository;
 import ie.atu.adminservice.exception.ResourceNotFoundException;
+import ie.atu.adminservice.model.Booking;
+import ie.atu.adminservice.repository.BookingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,14 +14,24 @@ public class BookingService {
     @Autowired
     private BookingRepository bookingRepository;
 
-    public List<?> getAllBookings() {
+    public List<Booking> getAllBookings() {
         return bookingRepository.findAll();
     }
 
-    public void deleteBooking(String id) {
-        if (!bookingRepository.existsById(id)) {
-            throw new ResourceNotFoundException("Booking not found with id: " + id);
+    public Booking getBookingById(String id) {
+        return bookingRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Booking not found with id: " + id));
+    }
+
+    public Booking createBooking(Booking booking) {
+        return bookingRepository.save(booking);
+    }
+
+    public void deleteBookingByUserId(String userId) {
+        List<Booking> bookings = bookingRepository.findByUserId(userId);
+        if (bookings.isEmpty()) {
+            throw new ResourceNotFoundException("No bookings found for userId: " + userId);
         }
-        bookingRepository.deleteById(id);
+        bookingRepository.deleteAll(bookings);
     }
 }
